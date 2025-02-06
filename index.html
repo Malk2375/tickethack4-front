@@ -17,7 +17,7 @@
                     <a class="nav-link" href="./card.html">Cart</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Bookings</a>
+                    <a class="nav-link" href="./bookings.html">Bookings</a>
                   </li>
                 </ul>
             </div>
@@ -25,32 +25,25 @@
     </nav>
     <h1>Explore the world effortlessly by train!</h1>
     <div id="container" class="d-flex justify-content-around">
-        <div class="card" style="width: 300px; color: #fff; height: 600px !important;">
-            <form id="searchForm" class="d-flex flex-column">
+        <div class="card" style="width: 300px; color: #fff; height: 450px !important;">
+            <form id="searchForm" class="d-flex flex-column" style="align-items: center;">
                     <div class="card-body">
-                        <!-- <label for="departure">Ville de départ:</label> -->
                         <input type="text" id="departure" class="form-control" name="departure" placeholder="Departure" required>
+                        <input type="text" id="arrival" class="form-control" name="arrival" placeholder="Arrival" required>
                     </div>
                     <br><br>
                     <div class="card-body">
-                    <!-- <label for="arrival">Ville d'arrivée:</label> -->
-                    <input type="text" id="arrival" class="form-control" name="arrival" placeholder="Arrival" required>
-                    </div>
-                    <br><br>
-                    <div class="card-body">
-                        <label for="date">Date :</label>
+                        <label for="date" style="color: black;">Date :</label>
                         <input type="date" id="date" class="form-control" name="date" required>
                     </div>
                     <br><br>
 
-                    <button type="submit" class="btn btn-success">Search</button>
+                    <button type="submit" class="btn btn-success" style="width: 80px;">Search</button>
             </form>
         </div>
         <div class="card" style="width: 300px;">
-            <!-- <h2>Résultats :</h2> -->
             <div id="results"></div>
         </div>
-        <div id="cart-items"></div> 
     </div>
 
     <script src="js/script.js">

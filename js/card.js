@@ -1,55 +1,84 @@
-// Fonction pour récupérer les éléments du panier
 async function getCartItems() {
-    const response = await fetch('http://localhost:3000/cart');
-    const data = await response.json();
-    console.log(data);
-    return data;
+    try {
+        const response = await fetch('http://localhost:3000/cart');
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Erreur lors de la récupération du panier');
+        }
+
+        console.log(data);
+        return data.cart; // Retourne directement la liste des trajets dans le panier
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
 }
 
-// Fonction pour afficher les éléments du panier
 async function displayCart() {
     const cartItems = await getCartItems();
     const cartDiv = document.getElementById('cart-items');
-    cartDiv.innerHTML = ''; // Réinitialiser les éléments avant l'affichage
+    cartDiv.innerHTML = '';
 
-    if (cartItems.message) {
-        cartDiv.innerHTML = `<p>${cartItems.message}</p>`; // Affiche le message si le panier est vide
+    if (!cartItems.length) {
+        cartDiv.innerHTML = `<p>Votre panier est vide.</p>`; // Affiche un message si le panier est vide
         return;
     }
 
     cartItems.forEach(item => {
+        const trip = item.trip;
         cartDiv.innerHTML += `
             <div class="cart-item card mb-3">
                 <div class="card-body">
-                    <p><strong>Départ:</strong> ${item.departure}</p>
-                    <p><strong>Arrivée:</strong> ${item.arrival}</p>
-                    <p><strong>Date:</strong> ${new Date(item.date).toLocaleString()}</p>
-                    <p><strong>Prix:</strong> ${item.price} €</p>
-                    <button class="btn btn-danger" onclick="removeFromCart('${item._id}')">Supprimer</button>
+                    <p><strong>Départ:</strong> ${trip.departure}</p>
+                    <p><strong>Arrivée:</strong> ${trip.arrival}</p>
+                    <p><strong>Date:</strong> ${new Date(trip.date).toLocaleString()}</p>
+                    <p><strong>Prix:</strong> ${trip.price} €</p>
+                    <button class="btn btn-danger" onclick="removeFromCart('${item._id}')">Delete</button>
+                    <button class="btn btn-success" onclick="payForTrip('${item._id}')">Buy</button>
                 </div>
             </div>
         `;
     });
 }
 
-// Fonction pour supprimer un trajet du panier
-async function removeFromCart(tripId) {
-    const response = await fetch('http://localhost:3000/cart/remove', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ tripId })
-    });
+async function removeFromCart(cartItemId) {
+    try {
+        const response = await fetch(`http://localhost:3000/cart/delete/${cartItemId}`, {
+            method: 'DELETE'
+        });
 
-    const data = await response.json();
-    if (response.ok) {
-        alert(data.message);
-        displayCart(); // Met à jour le panier après la suppression
-    } else {
-        alert('Erreur lors de la suppression du trajet');
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message || 'Erreur lors de la suppression du trajet');
+        }
+
+        alert('Trajet supprimé du panier');
+        displayCart();
+    } catch (error) {
+        console.error(error);
+        alert(error.message);
     }
 }
 
-// Appel pour afficher les éléments au chargement
+async function payForTrip(cartItemId) {
+    try {
+        const response = await fetch(`http://localhost:3000/cart/pay/${cartItemId}`, {
+            method: 'POST'
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message || 'Erreur lors du paiement');
+        }
+
+        alert('Trajet payé et ajouté aux réservations');
+        window.location.href = 'bookings.html';
+        // displayCart();
+    } catch (error) {
+        console.error(error);
+        alert(error.message);
+    }
+}
+
 displayCart();
