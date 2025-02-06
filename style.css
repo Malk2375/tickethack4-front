@@ -1,0 +1,13 @@
+body{
+    background-image: url('images/background.jpg');
+    background-size: cover;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ffffff;
+}
+#results {
+    max-height: 500px; /* Limite la hauteur maximale de la zone de résultats */
+    overflow-y: auto;  /* Active le défilement vertical si le contenu dépasse */
+    padding: 10px;     /* Ajoute un peu de marge intérieure */
+    border: 1px solid #ddd; /* Ajoute une bordure autour de la zone des résultats */
+    border-radius: 5px;  /* Donne des coins arrondis à la bordure */
+}
