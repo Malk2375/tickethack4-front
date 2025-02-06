@@ -1,6 +1,6 @@
 async function getBookedItems() {
     try {
-        const response = await fetch('http://localhost:3000/bookings');
+        const response = await fetch('https://tickethack4.vercel.app/bookings');
         const data = await response.json();
 
         if (!response.ok) {
@@ -58,7 +58,7 @@ async function displayBookings() {
 
 async function removeFromBookings(bookedItemId) {
     try {
-        const response = await fetch(`http://localhost:3000/bookings/delete/${bookedItemId}`, {
+        const response = await fetch(`https://tickethack4.vercel.app/bookings/delete/${bookedItemId}`, {
             method: 'DELETE'
         });
 

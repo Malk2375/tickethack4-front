@@ -1,6 +1,6 @@
 async function getCartItems() {
     try {
-        const response = await fetch('http://localhost:3000/cart');
+        const response = await fetch('https://tickethack4.vercel.app/cart');
         const data = await response.json();
 
         if (!response.ok) {
@@ -44,7 +44,7 @@ async function displayCart() {
 
 async function removeFromCart(cartItemId) {
     try {
-        const response = await fetch(`http://localhost:3000/cart/delete/${cartItemId}`, {
+        const response = await fetch(`https://tickethack4.vercel.app/${cartItemId}`, {
             method: 'DELETE'
         });
 
@@ -63,7 +63,7 @@ async function removeFromCart(cartItemId) {
 
 async function payForTrip(cartItemId) {
     try {
-        const response = await fetch(`http://localhost:3000/cart/pay/${cartItemId}`, {
+        const response = await fetch(`https://tickethack4.vercel.app/cart/pay/${cartItemId}`, {
             method: 'POST'
         });
 

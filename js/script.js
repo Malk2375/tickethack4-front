@@ -5,8 +5,7 @@ document.getElementById('searchForm').addEventListener('submit', async function(
     const arrival = document.getElementById('arrival').value;
     const date = document.getElementById('date').value;
 
-    const urlSearch = `http://localhost:3000/trips/${departure}/${arrival}/${date}`;
-    const urlAddToCart = 'http://localhost:3000/cart/add/';
+    const urlSearch = `https://tickethack4.vercel.app/trips/${departure}/${arrival}/${date}`;
 
     try {
         const response = await fetch(urlSearch);
@@ -56,7 +55,7 @@ document.getElementById('searchForm').addEventListener('submit', async function(
 });
 async function addToCart(tripId) {
     try {
-        const response = await fetch('http://localhost:3000/cart/add', {
+        const response = await fetch('https://tickethack4.vercel.app/cart/add', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
